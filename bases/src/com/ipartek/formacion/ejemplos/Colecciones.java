@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Colecciones {
 	public static void main(String[] args) {
-		ArrayList<String> al = new ArrayList<String>();
+		var al = new ArrayList<String>();
 		
 		al.add("Uno");
 		al.add("lasdjflaksdjf");
