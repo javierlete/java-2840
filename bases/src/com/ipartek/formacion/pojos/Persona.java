@@ -1,6 +1,7 @@
 package com.ipartek.formacion.pojos;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 public class Persona {
@@ -10,8 +11,8 @@ public class Persona {
 
 	// CONSTRUCTORES
 	public Persona(String nombre, LocalDate fechaNacimiento) {
-		this.nombre = nombre;
-		this.fechaNacimiento = fechaNacimiento;
+		setNombre(nombre);
+		setFechaNacimiento(fechaNacimiento);
 	}
 	
 	public Persona() {
@@ -29,6 +30,10 @@ public class Persona {
 	}
 
 	public void setNombre(String nombre) {
+		if(nombre == null) {
+			throw new RuntimeException("NO se admite null como nombre");
+		}
+		
 		this.nombre = nombre;
 	}
 
@@ -37,7 +42,15 @@ public class Persona {
 	}
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		if(fechaNacimiento != null && fechaNacimiento.isAfter(LocalDate.now())) {
+			throw new RuntimeException("No se admiten fechas de nacimiento posteriores a la actual");
+		}
+		
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	public int getEdad() {
+		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
 	}
 
 	// Source / Generate hashCode() and equals()...
@@ -62,6 +75,4 @@ public class Persona {
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + "]";
 	}
-
-	
 }
