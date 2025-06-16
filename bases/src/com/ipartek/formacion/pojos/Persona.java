@@ -5,6 +5,9 @@ import java.time.Period;
 import java.util.Objects;
 
 public class Persona {
+	// CONSTANTES
+	private static final int MAYORIA_DE_EDAD = 18;
+	
 	// VARIABLES DE INSTANCIA
 	private String nombre;
 	private LocalDate fechaNacimiento;
@@ -15,8 +18,12 @@ public class Persona {
 		setFechaNacimiento(fechaNacimiento);
 	}
 	
+	public Persona(String nombre) {
+		this(nombre, null);
+	}
+	
 	public Persona() {
-		
+		this("ANONIMO", null);
 	}
 	
 	// Constructor de copia
@@ -52,6 +59,10 @@ public class Persona {
 	public int getEdad() {
 		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
 	}
+	
+	public boolean isMayorDeEdad() {
+		return getEdad() >= MAYORIA_DE_EDAD;
+	}
 
 	// Source / Generate hashCode() and equals()...
 	@Override
@@ -71,6 +82,7 @@ public class Persona {
 		return Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(nombre, other.nombre);
 	}
 
+	// Source / Generate toString()...
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + "]";

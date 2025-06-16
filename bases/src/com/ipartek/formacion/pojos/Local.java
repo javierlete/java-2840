@@ -34,6 +34,14 @@ public class Local {
 	public ArrayList<Persona> getVisitantes() {
 		return visitantes;
 	}
+	
+	public boolean compararVisitantes(Local otro) {
+		return Local.compararVisitantes(this, otro);
+	}
+	
+	public static boolean compararVisitantes(Local local1, Local local2) {
+		return local1.getVisitantes().equals(local2.getVisitantes());
+	}
 
 	public void entrar(Persona visitante) {
 		visitantes.add(validarPersona(visitante));
@@ -44,7 +52,7 @@ public class Local {
 			throw new RuntimeException("NO se admiten valores nulos");
 		}
 		
-		if(persona.getFechaNacimiento() == null || persona.getEdad() < 18) {
+		if(persona.getFechaNacimiento() == null || !persona.isMayorDeEdad()) {
 			throw new RuntimeException("NO se admiten menores de edad o personas que no tengan una fecha de nacimiento");
 		}
 		
