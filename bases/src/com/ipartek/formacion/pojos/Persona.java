@@ -9,8 +9,8 @@ public class Persona {
 	private static final int MAYORIA_DE_EDAD = 18;
 	
 	// VARIABLES DE INSTANCIA
-	private String nombre;
-	private LocalDate fechaNacimiento;
+	protected String nombre;
+	protected LocalDate fechaNacimiento;
 
 	// CONSTRUCTORES
 	public Persona(String nombre, LocalDate fechaNacimiento) {
