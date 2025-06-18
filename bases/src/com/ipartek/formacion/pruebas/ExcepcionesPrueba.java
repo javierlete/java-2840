@@ -14,8 +14,23 @@ public class ExcepcionesPrueba {
 		Persona persona = new Persona();
 		
 		try {
-			int anyo = Integer.parseInt(sc.nextLine());
+			boolean correcto = false;
+			int anyo = 0;
+			
+			do {
+				try {
+					System.out.print("Dime el año: ");
+					anyo = Integer.parseInt(sc.nextLine());
+					correcto = true;
+				} catch (NumberFormatException e) {
+					System.out.println("El año es incorrecto");
+				} 
+			} while (!correcto);
+			
+			System.out.print("Dime el mes: ");
 			int mes = Integer.parseInt(sc.nextLine());
+			
+			System.out.print("Dime el día: ");
 			int dia = Integer.parseInt(sc.nextLine());
 			
 			persona.setFechaNacimiento(LocalDate.of(anyo, mes, dia));
