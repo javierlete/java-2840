@@ -38,7 +38,7 @@ public class Persona {
 
 	public void setNombre(String nombre) {
 		if(nombre == null) {
-			throw new RuntimeException("NO se admite null como nombre");
+			throw new PojosException("NO se admite null como nombre");
 		}
 		
 		this.nombre = nombre;
@@ -50,7 +50,7 @@ public class Persona {
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		if(fechaNacimiento != null && fechaNacimiento.isAfter(LocalDate.now())) {
-			throw new RuntimeException("No se admiten fechas de nacimiento posteriores a la actual");
+			throw new PojosException("No se admiten fechas de nacimiento posteriores a la actual");
 		}
 		
 		this.fechaNacimiento = fechaNacimiento;

@@ -21,11 +21,11 @@ public class Trabajador extends Persona {
 		super.setFechaNacimiento(fechaNacimiento);
 		
 		if(fechaNacimiento == null) {
-			throw new RuntimeException("Son obligatorias las fechas de nacimiento para los trabajadores");
+			throw new PojosException("Son obligatorias las fechas de nacimiento para los trabajadores");
 		}
 		
 		if(!isMayorDeEdad()) {
-			throw new RuntimeException("Debes ser mayor de edad para poder trabajar");
+			throw new PojosException("Debes ser mayor de edad para poder trabajar");
 		}
 		
 		this.fechaNacimiento = fechaNacimiento;

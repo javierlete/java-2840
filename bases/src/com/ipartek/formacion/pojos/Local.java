@@ -49,11 +49,11 @@ public class Local {
 
 	private Persona validarPersona(Persona persona) {
 		if(persona == null) {
-			throw new RuntimeException("NO se admiten valores nulos");
+			throw new PojosException("NO se admiten valores nulos");
 		}
 		
 		if(persona.getFechaNacimiento() == null || !persona.isMayorDeEdad()) {
-			throw new RuntimeException("NO se admiten menores de edad o personas que no tengan una fecha de nacimiento");
+			throw new PojosException("NO se admiten menores de edad o personas que no tengan una fecha de nacimiento");
 		}
 		
 		return persona;
