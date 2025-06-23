@@ -12,9 +12,9 @@ public class ExcepcionesPrueba {
 		Persona persona = new Persona();
 		
 		try {
-			int anyo = Consola.leerInt("Dime el año");
-			int mes = Consola.leerInt("Dime el mes");
-			int dia = Consola.leerInt("Dime el día");
+			int anyo = Consola.leerInteger("Dime el año");
+			int mes = Consola.leerInteger("Dime el mes");
+			int dia = Consola.leerInteger("Dime el día");
 			
 			persona.setFechaNacimiento(LocalDate.of(anyo, mes, dia));
 		} catch (DateTimeException e) {
