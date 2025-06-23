@@ -1,110 +1,126 @@
 package com.ipartek.formacion.bibliotecas;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class Consola {
 	private static final Scanner SC = new Scanner(System.in);
-	
+
 	public static String leerString(String mensaje) {
 		System.out.print(mensaje + ": ");
-		
+
 		return SC.nextLine();
 	}
-	
-	public static int leerInt(String mensaje) {
-		return leerInt(mensaje, Integer.MIN_VALUE, Integer.MAX_VALUE);
-	}
-	
-	public static int leerInt(String mensaje, int minimo) {
-		return leerInt(mensaje, minimo, Integer.MAX_VALUE);
+
+	public static Integer leerInteger(String mensaje) {
+		return leerInteger(mensaje, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 
-	public static int leerInt(String mensaje, int minimo, int maximo) {
-		boolean correcto = false;
-		int valor = 0;
-		
-		do {
-			try {
-				valor = Integer.parseInt(leerString(mensaje));
-				
-				if(valor >= minimo && valor <= maximo) {
-					correcto = true;
-				} else {
-					System.out.println("El valor debe estar entre " + minimo + " y " + maximo);
-				} 
-			} catch (NumberFormatException e) {
-				System.out.println("El número no es correcto");
-				System.out.println(e.getMessage());
-			} 
-		} while (!correcto);
-		
-		return valor;
+	public static Integer leerInteger(String mensaje, Integer minimo) {
+		return leerInteger(mensaje, minimo, Integer.MAX_VALUE);
 	}
-	
-	public static double leerDouble(String mensaje) {
+
+	public static Double leerDouble(String mensaje) {
 		return leerDouble(mensaje, Double.MIN_NORMAL, Double.MAX_VALUE);
 	}
-	
-	public static double leerDouble(String mensaje, double minimo) {
+
+	public static Double leerDouble(String mensaje, Double minimo) {
 		return leerDouble(mensaje, minimo, Double.MAX_VALUE);
 	}
-	
-	public static double leerDouble(String mensaje, double minimo, double maximo) {
+
+	public static LocalDate leerLocalDate() {
+		return leerLocalDate("Introduce una fecha (formato: AAAA-MM-DD)");
+	}
+
+	public static LocalDate leerLocalDate(String mensaje) {
+		return leerLocalDate(mensaje, LocalDate.MIN, LocalDate.MAX);
+	}
+
+	public static void cerrarConsola() {
+		SC.close();
+	}
+
+//	private interface Convertible<T> {
+//		T convertir(String texto);
+//	}
+
+	public static <T extends Comparable<T>> T leerGenerico(String mensaje, T minimo, T maximo,
+//			Convertible<T> conversor) {
+			Function<String, T> conversor) {
 		boolean correcto = false;
-		double valor = 0;
-		
+		T valor = null;
+
 		do {
 			try {
-				valor = Double.parseDouble(leerString(mensaje));
-				
-				if(valor >= minimo && valor <= maximo) {
+//				valor = conversor.convertir(leerString(mensaje));
+				valor = conversor.apply(leerString(mensaje));
+
+				if (valor.compareTo(minimo) >= 0 && valor.compareTo(maximo) <= 0) {
 					correcto = true;
 				} else {
 					System.out.println("El valor debe estar entre " + minimo + " y " + maximo);
 				}
-			} catch (NumberFormatException e) {
-				System.out.println("El número no es correcto");
+			} catch (Exception e) {
+				System.out.println("El formato no es correcto");
 				System.out.println(e.getMessage());
-			} 
+			}
 		} while (!correcto);
-		
+
 		return valor;
 	}
-	
-	public static LocalDate leerFecha() {
-		return leerFecha("Introduce una fecha (formato: AAAA-MM-DD)");
+
+//	private static class ConvertirAEntero implements Convertible<Integer> {
+//
+//		@Override
+//		public Integer convertir(String texto) {
+//			return Integer.parseInt(texto);
+//		}
+//
+//	}
+
+//	private static class ConvertirADouble implements Convertible<Double> {
+//		
+//		@Override
+//		public Double convertir(String texto) {
+//			return Double.parseDouble(texto);
+//		}
+//		
+//	}
+
+//	public static Integer leerInteger(String mensaje, Integer minimo, Integer maximo) {
+//		Convertible<Integer> conversor = new ConvertirAEntero();
+//		
+//		return leerGenerico(mensaje, minimo, maximo, conversor);
+//	}
+//
+//	public static Double leerDouble(String mensaje, Double minimo, Double maximo) {
+//		
+//		return leerGenerico(mensaje, minimo, maximo, new Convertible<Double>() {
+//			@Override
+//			public Double convertir(String texto) {
+//				return Double.parseDouble(texto);
+//			}
+//		});
+//	}
+
+	public static Integer leerInteger(String mensaje, Integer minimo, Integer maximo) {
+		return leerGenerico(mensaje, minimo, maximo, texto -> Integer.parseInt(texto));
 	}
-	
-	public static LocalDate leerFecha(String mensaje) {
-		return leerFecha(mensaje, LocalDate.MIN, LocalDate.MAX);
+
+	public static Double leerDouble(String mensaje, Double minimo, Double maximo) {
+		return leerGenerico(mensaje, minimo, maximo, texto -> Double.parseDouble(texto));
 	}
-	
-	public static LocalDate leerFecha(String mensaje, LocalDate minimo, LocalDate maximo) {
-		boolean correcto = false;
-		LocalDate fecha = null;
-		
-		do {
-			try {
-				String fechaStr = leerString(mensaje);
-				fecha = LocalDate.parse(fechaStr);
-				
-				if(fecha.isAfter(minimo) && fecha.isBefore(maximo)) {
-					correcto = true;
-				} else {
-					System.out.println("La fecha debe estar entre " + minimo + " y " + maximo);
-				}
-			} catch (DateTimeParseException e) {
-				System.out.println("La fecha no es correcta");
-				System.out.println(e.getMessage());
-			} 
-		} while (!correcto);
-		
-		return fecha;
+
+	public static BigDecimal leerBigDecimal(String mensaje, BigDecimal minimo, BigDecimal maximo) {
+		return leerGenerico(mensaje, minimo, maximo, texto -> new BigDecimal(texto));
 	}
-	
-	public static void cerrarConsola() {
-		SC.close();
+
+	public static LocalDate leerLocalDate(String mensaje, LocalDate minimo, LocalDate maximo) {
+		return (LocalDate) leerGenerico(mensaje, minimo, maximo, texto -> {
+			System.out.println("Conversión de fecha");
+			return LocalDate.parse(texto);
+		});
 	}
 }
