@@ -1,14 +1,15 @@
 package com.ipartek.formacion.pojos;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Local {
 	private String nombre;
 	
 	private Persona responsable;
 	
-	private ArrayList<Persona> visitantes = new ArrayList<>();
+	private Set<Persona> visitantes = new HashSet<>();
 
 	public Local(String nombre, Persona responsable) {
 		setNombre(nombre);
@@ -31,7 +32,7 @@ public class Local {
 		this.responsable = validarPersona(responsable);
 	}
 
-	public ArrayList<Persona> getVisitantes() {
+	public Set<Persona> getVisitantes() {
 		return visitantes;
 	}
 	

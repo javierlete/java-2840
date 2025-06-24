@@ -11,6 +11,7 @@ public class LocalPrueba {
 		
 		Local local = new Local("Ipartek", responsable);
 		
+		local.entrar(responsable);
 		local.entrar(new Persona("Pepe", LocalDate.of(1995, 2, 3)));
 		local.entrar(new Persona("Juan", LocalDate.of(2000, 2, 1)));
 		local.entrar(responsable);
@@ -18,6 +19,8 @@ public class LocalPrueba {
 //		local.entrar(new Persona("Otro", null));
 		
 		System.out.println(local);
+		
+		System.out.println(local.getVisitantes().size());
 		
 		System.out.println(local.getVisitantes());
 		
