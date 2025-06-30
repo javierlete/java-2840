@@ -1,12 +1,15 @@
 package com.ipartek.formacion.programas;
 
-import com.ipartek.formacion.bibliotecas.Consola;
+import static com.ipartek.formacion.bibliotecas.Consola.*;
 import com.ipartek.formacion.daos.Dao;
 import com.ipartek.formacion.daos.DaoPersonaSqlite;
 import com.ipartek.formacion.pojos.Persona;
 
 public class MantenimientoPersonasConsola {
-	private static final Dao<Persona> DAO = new DaoPersonaSqlite();
+	private static final Dao<Persona> DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
+	
+	private static final boolean CON_ID = true;
+	private static final boolean SIN_ID = false;
 
 	public static void main(String[] args) {
 
@@ -14,7 +17,7 @@ public class MantenimientoPersonasConsola {
 
 		do {
 			menu();
-			opcion = Consola.leerInteger("Dime una opción");
+			opcion = leerInteger("Dime una opción");
 			procesar(opcion);
 		} while (opcion != 0);
 	}
@@ -34,65 +37,78 @@ public class MantenimientoPersonasConsola {
 
 	private static void procesar(int opcion) {
 		switch (opcion) {
-		case 1:
-			listado();
-			break;
-		case 2:
-			buscar();
-			break;
-		case 3:
-			anyadir();
-			break;
-		case 4:
-			modificar();
-			break;
-		case 5:
-			borrar();
-			break;
-		case 0:
-			System.out.println("Gracias por usar esta aplicación");
-			break;
-		default:
-			System.out.println("Opción incorrecta");
+		case 1 -> listado();
+		case 2 -> buscar();
+		case 3 -> anyadir();
+		case 4 -> modificar();
+		case 5 -> borrar();
+		case 0 -> System.out.println("Gracias por usar esta aplicación");
+		default -> System.out.println("Opción incorrecta");
 		}
 	}
 
 	private static void listado() {
 		for (var persona : DAO.obtenerTodos()) {
-			System.out.println(persona);
+			mostrarFilaPersona(persona);
 		}
 	}
 
 	private static void buscar() {
-		var id = Consola.leerInteger("Dime el id a buscar");
+		var id = leerInteger("Dime el id a buscar");
 
 		var persona = DAO.obtenerPorId((long) id);
 
-		System.out.println(persona);
+		mostrarFichaPersona(persona);
 	}
 
 	private static void anyadir() {
-		var nombre = Consola.leerString("Nombre");
-		var fechaNacimiento = Consola.leerLocalDate("Fecha de nacimiento");
-
-		var persona = new Persona(nombre, fechaNacimiento);
+		var persona = pedirDatosPersona(SIN_ID);
 
 		DAO.insertar(persona);
 	}
 
 	private static void modificar() {
-		var id = Consola.leerInteger("Id");
-		var nombre = Consola.leerString("Nombre");
-		var fechaNacimiento = Consola.leerLocalDate("Fecha de nacimiento");
-
-		var persona = new Persona((long) id, nombre, fechaNacimiento);
+		var persona = pedirDatosPersona();
 
 		DAO.modificar(persona);
 	}
 
 	private static void borrar() {
-		var id = Consola.leerInteger("Dime el id a borrar");
-
+		var id = leerInteger("Dime el id a borrar");
+	
 		DAO.borrar((long) id);
+	}
+
+	private static void mostrarFilaPersona(Persona persona) {
+		System.out.println(persona);
+	}
+
+	private static void mostrarFichaPersona(Persona persona) {
+		System.out.println(persona);
+	}
+
+	private static Persona pedirDatosPersona() {
+		return pedirDatosPersona(CON_ID);
+	}
+	
+	private static Persona pedirDatosPersona(boolean conId) {
+		do {
+			try {
+				Long id = null;
+
+				if (conId) {
+					id = (long) leerInteger("Id");
+				}
+
+				var nombre = leerString("Nombre");
+				var fechaNacimiento = leerLocalDate("Fecha de nacimiento");
+
+				var persona = new Persona(id, nombre, fechaNacimiento);
+				
+				return persona;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} 
+		} while (true);
 	}
 }

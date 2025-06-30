@@ -9,96 +9,77 @@ import com.ipartek.formacion.pojos.Persona;
 
 public class DaoPersonaSqlite implements Dao<Persona> {
 
-	private static final String URL = "jdbc:sqlite:bdd/tienda.db";
+	private final String url;
+
+	public DaoPersonaSqlite(String url) {
+		this.url = url;
+	}
 
 	@Override
 	public Iterable<Persona> obtenerTodos() {
-		try (var con = DriverManager.getConnection(URL);
-				var pst = con.prepareStatement("SELECT * FROM personas");
-				var rs = pst.executeQuery()) {
-			var personas = new ArrayList<Persona>();
-
-			while (rs.next()) {
-				var id = rs.getLong("id");
-				var nombre = rs.getString("nombre");
-
-				var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
-				var fechaNacimiento = fechaNacimientoOriginal == null ? null : LocalDate.parse(fechaNacimientoOriginal);
-
-				var persona = new Persona(id, nombre, fechaNacimiento);
-
-				personas.add(persona);
-			}
-
-			return personas;
-		} catch (SQLException e) {
-			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
-		}
+		return ejecutarConsultaSql("SELECT * FROM personas");
 	}
 
 	@Override
 	public Persona obtenerPorId(Long id) {
-		try (var con = DriverManager.getConnection(URL);
-				var pst = con.prepareStatement("SELECT * FROM personas WHERE id=?");
-				) {
-			pst.setLong(1, id);
-			
-			var rs = pst.executeQuery();
+		var personas = ejecutarConsultaSql("SELECT * FROM personas WHERE id=?", id);
 
-			if (rs.next()) {
-				var nombre = rs.getString("nombre");
-
-				var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
-				var fechaNacimiento = fechaNacimientoOriginal == null ? null : LocalDate.parse(fechaNacimientoOriginal);
-
-				var persona = new Persona(id, nombre, fechaNacimiento);
-				
-				return persona;
-			}
-
+		if (personas.iterator().hasNext()) {
+			return personas.iterator().next();
+		} else {
 			return null;
-		} catch (SQLException e) {
-			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
 		}
 	}
 
 	@Override
 	public void insertar(Persona persona) {
-		try (var con = DriverManager.getConnection(URL);
-				var pst = con.prepareStatement("INSERT INTO personas (nombre, fecha_nacimiento) VALUES (?,?)");) {
-
-			pst.setString(1, persona.getNombre());
-			pst.setString(2, persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString());
-			
-			pst.executeUpdate();
-		} catch (SQLException e) {
-			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
-		}
+		ejecutarConsultaSql("INSERT INTO personas (nombre, fecha_nacimiento) VALUES (?,?)", persona.getNombre(),
+				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString());
 	}
 
 	@Override
 	public void modificar(Persona persona) {
-		try (var con = DriverManager.getConnection(URL);
-				var pst = con.prepareStatement("UPDATE personas SET nombre=?, fecha_nacimiento=? WHERE id=?");){
-
-			pst.setString(1, persona.getNombre());
-			pst.setString(2, persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString());
-			pst.setLong(3, persona.getId());
-			
-			pst.executeUpdate();
-		} catch (SQLException e) {
-			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
-		}
+		ejecutarConsultaSql("UPDATE personas SET nombre=?, fecha_nacimiento=? WHERE id=?", persona.getNombre(),
+				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString(), persona.getId());
 	}
 
 	@Override
 	public void borrar(Long id) {
-		try (var con = DriverManager.getConnection(URL);
-				var pst = con.prepareStatement("DELETE FROM personas WHERE id=?");){
+		ejecutarConsultaSql("DELETE FROM personas WHERE id=?", id);
+	}
 
-			pst.setLong(1, id);
-			
-			pst.executeUpdate();
+	private Iterable<Persona> ejecutarConsultaSql(String sql, Object... parametros) {
+		try (var con = DriverManager.getConnection(url); var pst = con.prepareStatement(sql);) {
+
+			int posicion = 1;
+
+			for (var parametro : parametros) {
+				pst.setObject(posicion, parametro);
+				posicion++;
+			}
+
+			if (sql.contains("SELECT")) {
+				var rs = pst.executeQuery();
+				var personas = new ArrayList<Persona>();
+
+				while (rs.next()) {
+					var id = rs.getLong("id");
+					var nombre = rs.getString("nombre");
+
+					var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
+					var fechaNacimiento = fechaNacimientoOriginal == null ? null
+							: LocalDate.parse(fechaNacimientoOriginal);
+
+					var persona = new Persona(id, nombre, fechaNacimiento);
+
+					personas.add(persona);
+				}
+
+				return personas;
+			} else {
+				pst.executeUpdate();
+				return null;
+			}
 		} catch (SQLException e) {
 			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
 		}
