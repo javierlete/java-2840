@@ -1,7 +1,8 @@
 package com.ipartek.formacion.programas;
 
 import static com.ipartek.formacion.bibliotecas.Consola.*;
-import com.ipartek.formacion.daos.Dao;
+
+import com.ipartek.formacion.bibliotecas.Dao;
 import com.ipartek.formacion.daos.DaoPersonaSqlite;
 import com.ipartek.formacion.pojos.Persona;
 

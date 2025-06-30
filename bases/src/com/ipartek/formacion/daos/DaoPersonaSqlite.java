@@ -1,46 +1,38 @@
 package com.ipartek.formacion.daos;
 
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
+import com.ipartek.formacion.bibliotecas.Dao;
+import com.ipartek.formacion.bibliotecas.DaoException;
+import com.ipartek.formacion.bibliotecas.DaoJdbc;
 import com.ipartek.formacion.pojos.Persona;
 
-public class DaoPersonaSqlite implements Dao<Persona> {
-
-	private final String url;
+public class DaoPersonaSqlite extends DaoJdbc<Persona> implements Dao<Persona> {
 
 	public DaoPersonaSqlite(String url) {
-		this.url = url;
+		super(url);
 	}
 
 	@Override
 	public Iterable<Persona> obtenerTodos() {
-		return ejecutarConsultaSql("SELECT * FROM personas");
+		return ejecutarConsultaSql("SELECT * FROM personas", rs -> filaAObjeto(rs));
 	}
 
 	@Override
 	public Persona obtenerPorId(Long id) {
-		var personas = ejecutarConsultaSql("SELECT * FROM personas WHERE id=?", id);
-
-		if (personas.iterator().hasNext()) {
-			return personas.iterator().next();
-		} else {
-			return null;
-		}
+		return ejecutarConsultaSqlUno("SELECT * FROM personas WHERE id=?", rs -> filaAObjeto(rs), id);
 	}
 
 	@Override
 	public void insertar(Persona persona) {
-		ejecutarConsultaSql("INSERT INTO personas (nombre, fecha_nacimiento) VALUES (?,?)", persona.getNombre(),
-				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString());
+		ejecutarConsultaSql("INSERT INTO personas (nombre, fecha_nacimiento) VALUES (?,?)", objetoAFila(persona));
 	}
 
 	@Override
 	public void modificar(Persona persona) {
-		ejecutarConsultaSql("UPDATE personas SET nombre=?, fecha_nacimiento=? WHERE id=?", persona.getNombre(),
-				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString(), persona.getId());
+		ejecutarConsultaSql("UPDATE personas SET nombre=?, fecha_nacimiento=? WHERE id=?", objetoAFila(persona));
 	}
 
 	@Override
@@ -48,41 +40,23 @@ public class DaoPersonaSqlite implements Dao<Persona> {
 		ejecutarConsultaSql("DELETE FROM personas WHERE id=?", id);
 	}
 
-	private Iterable<Persona> ejecutarConsultaSql(String sql, Object... parametros) {
-		try (var con = DriverManager.getConnection(url); var pst = con.prepareStatement(sql);) {
+	private static Persona filaAObjeto(ResultSet rs) {
+		try {
+			var id = rs.getLong("id");
+			var nombre = rs.getString("nombre");
 
-			int posicion = 1;
+			var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
+			var fechaNacimiento = fechaNacimientoOriginal == null ? null : LocalDate.parse(fechaNacimientoOriginal);
 
-			for (var parametro : parametros) {
-				pst.setObject(posicion, parametro);
-				posicion++;
-			}
-
-			if (sql.contains("SELECT")) {
-				var rs = pst.executeQuery();
-				var personas = new ArrayList<Persona>();
-
-				while (rs.next()) {
-					var id = rs.getLong("id");
-					var nombre = rs.getString("nombre");
-
-					var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
-					var fechaNacimiento = fechaNacimientoOriginal == null ? null
-							: LocalDate.parse(fechaNacimientoOriginal);
-
-					var persona = new Persona(id, nombre, fechaNacimiento);
-
-					personas.add(persona);
-				}
-
-				return personas;
-			} else {
-				pst.executeUpdate();
-				return null;
-			}
+			return new Persona(id, nombre, fechaNacimiento);
 		} catch (SQLException e) {
 			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
 		}
 	}
 
+	private static Object[] objetoAFila(Persona persona) {
+		return new Object[] { persona.getNombre(),
+				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString(),
+				persona.getId() };
+	}
 }

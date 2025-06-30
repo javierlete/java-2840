@@ -3,6 +3,7 @@ package com.ipartek.formacion.daos;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import com.ipartek.formacion.bibliotecas.Dao;
 import com.ipartek.formacion.pojos.Persona;
 
 public class DaoPersonaTreeMap implements Dao<Persona> {

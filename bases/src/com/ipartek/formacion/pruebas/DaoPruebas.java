@@ -1,6 +1,6 @@
 package com.ipartek.formacion.pruebas;
 
-import com.ipartek.formacion.daos.Dao;
+import com.ipartek.formacion.bibliotecas.Dao;
 import com.ipartek.formacion.daos.DaoPersonaFichero;
 import com.ipartek.formacion.pojos.Persona;
 

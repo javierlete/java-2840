@@ -3,6 +3,7 @@ package com.ipartek.formacion.daos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ipartek.formacion.bibliotecas.Dao;
 import com.ipartek.formacion.pojos.Persona;
 
 public class DaoPersonaList implements Dao<Persona> {

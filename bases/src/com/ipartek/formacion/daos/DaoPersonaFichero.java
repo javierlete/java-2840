@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.SortedMap;
 
+import com.ipartek.formacion.bibliotecas.Dao;
 import com.ipartek.formacion.pojos.Persona;
 
 public class DaoPersonaFichero extends DaoPersonaTreeMap implements Dao<Persona> {

@@ -1,4 +1,4 @@
-package com.ipartek.formacion.daos;
+package com.ipartek.formacion.bibliotecas;
 
 // Create
 // Read

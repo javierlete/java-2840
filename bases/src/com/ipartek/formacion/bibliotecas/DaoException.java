@@ -1,4 +1,4 @@
-package com.ipartek.formacion.daos;
+package com.ipartek.formacion.bibliotecas;
 
 public class DaoException extends RuntimeException {
 	private static final long serialVersionUID = 89810242316536378L;
