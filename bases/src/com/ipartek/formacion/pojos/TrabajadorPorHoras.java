@@ -1,9 +1,12 @@
 package com.ipartek.formacion.pojos;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class TrabajadorPorHoras extends Trabajador {
+public class TrabajadorPorHoras extends Trabajador implements Serializable  {
+	private static final long serialVersionUID = -438690435832250324L;
+
 	private BigDecimal precioHora;
 	private Integer numeroHorasMensuales;
 	

@@ -1,10 +1,13 @@
 package com.ipartek.formacion.pojos;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
-public class TrabajadorIndefinido extends Trabajador {
+public class TrabajadorIndefinido extends Trabajador implements Serializable  {
+	private static final long serialVersionUID = -4858563256073478377L;
+
 	private BigDecimal sueldoAnual;
 	private Integer numeroPagas;
 	

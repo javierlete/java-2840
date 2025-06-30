@@ -1,10 +1,13 @@
 package com.ipartek.formacion.pojos;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Trabajador extends Persona {
+public abstract class Trabajador extends Persona implements Serializable {
+	private static final long serialVersionUID = -4703258332381597124L;
+
 	private String apellidos;
 	private String nss;
 	private String dni;
