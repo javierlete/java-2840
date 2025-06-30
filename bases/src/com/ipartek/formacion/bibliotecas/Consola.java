@@ -11,31 +11,9 @@ public class Consola {
 	public static String leerString(String mensaje) {
 		System.out.print(mensaje + ": ");
 
-		return SC.nextLine();
-	}
-
-	public static Integer leerInteger(String mensaje) {
-		return leerInteger(mensaje, Integer.MIN_VALUE, Integer.MAX_VALUE);
-	}
-
-	public static Integer leerInteger(String mensaje, Integer minimo) {
-		return leerInteger(mensaje, minimo, Integer.MAX_VALUE);
-	}
-
-	public static Double leerDouble(String mensaje) {
-		return leerDouble(mensaje, Double.MIN_NORMAL, Double.MAX_VALUE);
-	}
-
-	public static Double leerDouble(String mensaje, Double minimo) {
-		return leerDouble(mensaje, minimo, Double.MAX_VALUE);
-	}
-
-	public static LocalDate leerLocalDate() {
-		return leerLocalDate("Introduce una fecha (formato: AAAA-MM-DD)");
-	}
-
-	public static LocalDate leerLocalDate(String mensaje) {
-		return leerLocalDate(mensaje, LocalDate.MIN, LocalDate.MAX);
+		var texto = SC.nextLine();
+		
+		return texto.isBlank() ? null: texto;
 	}
 
 	public static void cerrarConsola() {
@@ -55,7 +33,13 @@ public class Consola {
 		do {
 			try {
 //				valor = conversor.convertir(leerString(mensaje));
-				valor = conversor.apply(leerString(mensaje));
+				String texto = leerString(mensaje);
+				
+				if(texto == null) {
+					return null;
+				}
+				
+				valor = conversor.apply(texto);
 
 				if (valor.compareTo(minimo) >= 0 && valor.compareTo(maximo) <= 0) {
 					correcto = true;
@@ -105,8 +89,24 @@ public class Consola {
 //		});
 //	}
 
+	public static Integer leerInteger(String mensaje) {
+		return leerInteger(mensaje, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+
+	public static Integer leerInteger(String mensaje, Integer minimo) {
+		return leerInteger(mensaje, minimo, Integer.MAX_VALUE);
+	}
+
 	public static Integer leerInteger(String mensaje, Integer minimo, Integer maximo) {
 		return leerGenerico(mensaje, minimo, maximo, texto -> Integer.parseInt(texto));
+	}
+
+	public static Double leerDouble(String mensaje) {
+		return leerDouble(mensaje, Double.MIN_NORMAL, Double.MAX_VALUE);
+	}
+
+	public static Double leerDouble(String mensaje, Double minimo) {
+		return leerDouble(mensaje, minimo, Double.MAX_VALUE);
 	}
 
 	public static Double leerDouble(String mensaje, Double minimo, Double maximo) {
@@ -115,6 +115,14 @@ public class Consola {
 
 	public static BigDecimal leerBigDecimal(String mensaje, BigDecimal minimo, BigDecimal maximo) {
 		return leerGenerico(mensaje, minimo, maximo, texto -> new BigDecimal(texto));
+	}
+
+	public static LocalDate leerLocalDate() {
+		return leerLocalDate("Introduce una fecha (formato: AAAA-MM-DD)");
+	}
+
+	public static LocalDate leerLocalDate(String mensaje) {
+		return leerLocalDate(mensaje, LocalDate.MIN, LocalDate.MAX);
 	}
 
 	public static LocalDate leerLocalDate(String mensaje, LocalDate minimo, LocalDate maximo) {
