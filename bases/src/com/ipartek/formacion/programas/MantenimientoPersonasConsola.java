@@ -1,13 +1,15 @@
 package com.ipartek.formacion.programas;
 
-import static com.ipartek.formacion.bibliotecas.Consola.*;
+import static com.ipartek.formacion.bibliotecas.Consola.leerInteger;
+import static com.ipartek.formacion.bibliotecas.Consola.leerLocalDate;
+import static com.ipartek.formacion.bibliotecas.Consola.leerString;
 
-import com.ipartek.formacion.bibliotecas.Dao;
+import com.ipartek.formacion.daos.DaoPersona;
 import com.ipartek.formacion.daos.DaoPersonaSqlite;
 import com.ipartek.formacion.pojos.Persona;
 
 public class MantenimientoPersonasConsola {
-	private static final Dao<Persona> DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
+	private static final DaoPersona DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
 	
 	private static final boolean CON_ID = true;
 	private static final boolean SIN_ID = false;

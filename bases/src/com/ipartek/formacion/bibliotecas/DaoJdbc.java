@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public class DaoJdbc<T> {
 
-	protected final String url;
+	private final String url;
 
 	public DaoJdbc(String url) {
 		super();

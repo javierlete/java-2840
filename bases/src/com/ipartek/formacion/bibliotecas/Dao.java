@@ -6,10 +6,23 @@ package com.ipartek.formacion.bibliotecas;
 // Delete
 
 public interface Dao<T> {
-	Iterable<T> obtenerTodos();
-	T obtenerPorId(Long id);
-	
-	void insertar(T objeto);
-	void modificar(T objeto);
-	void borrar(Long id);
+	default Iterable<T> obtenerTodos() {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+
+	default T obtenerPorId(Long id) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+
+	default	void insertar(T objeto) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+
+	default void modificar(T objeto) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+
+	default void borrar(Long id) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
 }

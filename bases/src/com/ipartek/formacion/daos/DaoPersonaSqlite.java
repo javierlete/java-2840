@@ -4,12 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import com.ipartek.formacion.bibliotecas.Dao;
 import com.ipartek.formacion.bibliotecas.DaoException;
 import com.ipartek.formacion.bibliotecas.DaoJdbc;
 import com.ipartek.formacion.pojos.Persona;
 
-public class DaoPersonaSqlite extends DaoJdbc<Persona> implements Dao<Persona> {
+public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 
 	public DaoPersonaSqlite(String url) {
 		super(url);
