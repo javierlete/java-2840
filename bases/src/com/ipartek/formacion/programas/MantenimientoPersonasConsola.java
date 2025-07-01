@@ -6,11 +6,16 @@ import static com.ipartek.formacion.bibliotecas.Consola.leerString;
 
 import com.ipartek.formacion.daos.DaoPersona;
 import com.ipartek.formacion.daos.DaoPersonaSqlite;
+import com.ipartek.formacion.daos.DaoRol;
+import com.ipartek.formacion.daos.DaoRolSqlite;
 import com.ipartek.formacion.pojos.Persona;
 
 public class MantenimientoPersonasConsola {
-	private static final DaoPersona DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
-	
+	private static final String URL_SQLITE = "jdbc:sqlite:bdd/tienda.db";
+
+	private static final DaoPersona DAO = new DaoPersonaSqlite(URL_SQLITE);
+	private static final DaoRol DAO_ROL = new DaoRolSqlite(URL_SQLITE);
+
 	private static final boolean CON_ID = true;
 	private static final boolean SIN_ID = false;
 
@@ -34,6 +39,9 @@ public class MantenimientoPersonasConsola {
 				4. Modificar
 				5. Borrar
 
+				6. Listado roles
+				7. Obtener rol por id
+
 				0. Salir
 				""");
 	}
@@ -45,6 +53,8 @@ public class MantenimientoPersonasConsola {
 		case 3 -> anyadir();
 		case 4 -> modificar();
 		case 5 -> borrar();
+		case 6 -> listadoRoles();
+		case 7 -> buscarRol();
 		case 0 -> System.out.println("Gracias por usar esta aplicación");
 		default -> System.out.println("Opción incorrecta");
 		}
@@ -78,8 +88,22 @@ public class MantenimientoPersonasConsola {
 
 	private static void borrar() {
 		var id = leerInteger("Dime el id a borrar");
-	
+
 		DAO.borrar((long) id);
+	}
+
+	private static void listadoRoles() {
+		for (var rol : DAO_ROL.obtenerTodos()) {
+			System.out.println(rol);
+		}
+	}
+
+	private static void buscarRol() {
+		var id = leerInteger("Dime el id del rol");
+
+		var rol = DAO_ROL.obtenerPorId((long) id);
+		
+		System.out.println(rol);
 	}
 
 	private static void mostrarFilaPersona(Persona persona) {
@@ -93,7 +117,7 @@ public class MantenimientoPersonasConsola {
 	private static Persona pedirDatosPersona() {
 		return pedirDatosPersona(CON_ID);
 	}
-	
+
 	private static Persona pedirDatosPersona(boolean conId) {
 		do {
 			try {
@@ -107,11 +131,11 @@ public class MantenimientoPersonasConsola {
 				var fechaNacimiento = leerLocalDate("Fecha de nacimiento");
 
 				var persona = new Persona(id, nombre, fechaNacimiento);
-				
+
 				return persona;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-			} 
+			}
 		} while (true);
 	}
 }
