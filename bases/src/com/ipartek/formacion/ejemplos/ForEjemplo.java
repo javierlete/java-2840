@@ -1,5 +1,8 @@
 package com.ipartek.formacion.ejemplos;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class ForEjemplo {
 	public static void main(String[] args) {
 		// Comenzamos con el contador con el valor 1
@@ -18,6 +21,26 @@ public class ForEjemplo {
 
 		for (int dato : datos) { // Por cada dato dentro del conjunto de datos
 			System.out.println(dato); // muéstralo por pantalla
+		}
+		
+		var al = new ArrayList<String>();
+		
+		al.add("UNO");
+		al.add("DOS");
+		al.add("TRES");
+		
+		for(var texto: al) {
+			System.out.println(texto);
+		}
+
+		Iterable<String> iterable = al;
+		
+		Iterator<String> iterator = iterable.iterator();
+		
+		while(iterator.hasNext()) {
+			var texto = iterator.next();
+			
+			System.out.println(texto);
 		}
 	}
 }
