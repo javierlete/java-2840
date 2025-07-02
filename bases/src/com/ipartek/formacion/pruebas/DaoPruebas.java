@@ -1,24 +1,30 @@
 package com.ipartek.formacion.pruebas;
 
-import com.ipartek.formacion.bibliotecas.Dao;
-import com.ipartek.formacion.daos.DaoPersonaFichero;
-import com.ipartek.formacion.pojos.Persona;
+import com.ipartek.formacion.daos.DaoPersona;
+import com.ipartek.formacion.daos.DaoPersonaSqlite;
 
 public class DaoPruebas {
 	public static void main(String[] args) {
-		Dao<Persona> dao = new DaoPersonaFichero("fichero.dat");
+		DaoPersona dao = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
 		
-		dao.insertar(new Persona());
-		dao.insertar(new Persona("Javier"));
+//		dao.insertar(new Persona());
+//		dao.insertar(new Persona("Javier"));
 		
+//		for(var p: dao.obtenerTodos()) {
+//			System.out.println(p);
+//		}
+
+//		dao.insertar(new Persona("Pedro"));
+
 		for(var p: dao.obtenerTodos()) {
 			System.out.println(p);
 		}
-
-		dao.insertar(new Persona("Pedro"));
-
-		for(var p: dao.obtenerTodos()) {
+		
+		for(var p: dao.obtenerTodosConRol()) {
 			System.out.println(p);
+			System.out.println(p.getNombre() + " tiene el rol " + p.getRol().getNombre());
 		}
+		
+		
 	}
 }
