@@ -1,7 +1,6 @@
 package com.ipartek.formacion.ejemplos;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ForEjemplo {
 	public static void main(String[] args) {
@@ -33,12 +32,12 @@ public class ForEjemplo {
 			System.out.println(texto);
 		}
 
-		Iterable<String> iterable = al;
+//		Iterable<String> iterable = al;
+//		
+//		Iterator<String> iterator = iterable.iterator();
 		
-		Iterator<String> iterator = iterable.iterator();
-		
-		while(iterator.hasNext()) {
-			var texto = iterator.next();
+		while(al.iterator().hasNext()) {
+			var texto = al.iterator().next();
 			
 			System.out.println(texto);
 		}
