@@ -66,6 +66,10 @@ public class Persona implements Serializable {
 			throw new PojosException("NO se admite null como nombre");
 		}
 		
+		if(nombre.isBlank()) {
+			throw new PojosException("NO se admites nombres vacíos");
+		}
+		
 		this.nombre = nombre;
 	}
 
