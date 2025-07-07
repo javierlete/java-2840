@@ -10,9 +10,15 @@ import com.ipartek.formacion.pojos.Persona;
 import com.ipartek.formacion.pojos.Rol;
 
 public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
-
+	
 	public DaoPersonaSqlite(String url) {
 		super(url);
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			throw new DaoException("No se ha podido encontrar el driver de SQLite", e);
+		}
 	}
 
 	@Override
