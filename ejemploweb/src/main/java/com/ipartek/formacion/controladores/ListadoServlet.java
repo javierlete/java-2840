@@ -21,7 +21,7 @@ public class ListadoServlet extends HttpServlet {
 		// Ejecutar lógica de negocio
 		var dao = new DaoPersonaSqlite("jdbc:sqlite:C:/Users/JavierLete/git/java-2840/bases/bdd/tienda.db");
 		
-		var personas = dao.obtenerTodos();
+		var personas = dao.obtenerTodosConRol();
 		
 		// Preparar modelo para siguiente vista
 		request.setAttribute("personas", personas);

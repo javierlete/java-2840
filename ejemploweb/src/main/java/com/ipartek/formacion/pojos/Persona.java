@@ -93,7 +93,11 @@ public class Persona implements Serializable {
 		this.rol = rol;
 	}
 
-	public int getEdad() {
+	public Integer getEdad() {
+		if(fechaNacimiento == null) {
+			return null;
+		}
+		
 		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
 	}
 	
