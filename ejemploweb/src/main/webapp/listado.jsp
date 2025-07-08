@@ -1,10 +1,6 @@
-<%@page import="com.ipartek.formacion.pojos.Persona"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-@SuppressWarnings("unchecked")
-Iterable<Persona> personas = (Iterable<Persona>) request.getAttribute("personas");
-%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,13 +10,9 @@ Iterable<Persona> personas = (Iterable<Persona>) request.getAttribute("personas"
 <body>
 
 	<ul>
-		<%
-		for (var persona : personas) {
-		%>
-		<li><%=persona%></li>
-		<%
-		}
-		%>
+		<c:forEach items="${personas}" var="persona">
+			<li>${persona}</li>
+		</c:forEach>
 	</ul>
 
 </body>
