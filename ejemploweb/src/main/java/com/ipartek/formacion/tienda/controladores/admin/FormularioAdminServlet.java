@@ -52,14 +52,14 @@ public class FormularioAdminServlet extends HttpServlet {
 		Producto producto = new Producto(id, nombre, precio);
 
 		// Ejecutar lógica de negocio
+		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/JavierLete/git/java-2840/ejemploweb/bdd/tienda.db");
+		
 		if(id == null) {
-			System.out.print("Añadiendo nuevo producto: ");
+			dao.insertar(producto);
 		} else {
-			System.out.print("Modificando producto existente: ");
+			dao.modificar(producto);
 		}
 		
-		System.out.println(producto);
-
 		// Preparar modelo para siguiente vista
 		// Saltar a la siguiente vista
 		response.sendRedirect("listado");
