@@ -2,7 +2,8 @@ package com.ipartek.formacion.tienda.controladores.admin;
 
 import java.io.IOException;
 
-import com.ipartek.formacion.tienda.mocks.TiendaMock;
+import com.ipartek.formacion.tienda.accesodatos.DaoProducto;
+import com.ipartek.formacion.tienda.accesodatos.DaoProductoSqlite;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,12 +25,12 @@ public class BorrarAdminServlet extends HttpServlet {
 		
 		// Crear objeto basado en información individual
 		// Ejecutar lógica de negocio
-		System.out.println("Borrando producto id " + id);
+		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/JavierLete/git/java-2840/ejemploweb/bdd/tienda.db");
+		
+		dao.borrar(id);
 		
 		// Preparar modelo para siguiente vista
-		request.setAttribute("productos", TiendaMock.PRODUCTOS.values());
-		
 		// Saltar a la siguiente vista
-		request.getRequestDispatcher("/WEB-INF/vistas/admin/listado.jsp").forward(request,response);
+		response.sendRedirect("listado");
 	}
 }
