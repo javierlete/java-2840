@@ -3,7 +3,8 @@ package com.ipartek.formacion.tienda.controladores.admin;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import com.ipartek.formacion.tienda.mocks.TiendaMock;
+import com.ipartek.formacion.tienda.accesodatos.DaoProducto;
+import com.ipartek.formacion.tienda.accesodatos.DaoProductoSqlite;
 import com.ipartek.formacion.tienda.modelos.Producto;
 
 import jakarta.servlet.ServletException;
@@ -26,7 +27,9 @@ public class FormularioAdminServlet extends HttpServlet {
 			Long id = Long.parseLong(sId);
 			// Crear objeto basado en información individual
 			// Ejecutar lógica de negocio
-			var producto = TiendaMock.PRODUCTOS.get(id);
+			DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/JavierLete/git/java-2840/ejemploweb/bdd/tienda.db");
+			var producto = dao.obtenerPorId(id);
+			
 			// Preparar modelo para siguiente vista
 			request.setAttribute("producto", producto);
 		}
