@@ -1,22 +1,35 @@
 package com.ipartek.formacion.tienda.modelos;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Producto {
 	private Long id;
 	private String nombre;
 	private BigDecimal precio;
+	
+	private Map<String, String> errores = new HashMap<>();
 
+	public Producto(String id, String nombre, String precio) {
+		setId(id);
+		setNombre(nombre);
+		setPrecio(precio);
+	}
+	
 	public Producto(Long id, String nombre, BigDecimal precio) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.precio = precio;
+		setId(id);
+		setNombre(nombre);
+		setPrecio(precio);
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	private void setId(String sId) {
+		setId(sId.isBlank() ? null : Long.parseLong(sId));
 	}
 
 	public void setId(Long id) {
@@ -28,6 +41,10 @@ public class Producto {
 	}
 
 	public void setNombre(String nombre) {
+		if(nombre == null || nombre.isBlank()) {
+			errores.put("nombre", "El nombre es obligatorio");
+		}
+
 		this.nombre = nombre;
 	}
 
@@ -35,10 +52,30 @@ public class Producto {
 		return precio;
 	}
 
+	private void setPrecio(String sPrecio) {
+		try {
+			setPrecio(new BigDecimal(sPrecio));
+		} catch (NumberFormatException e) {
+			errores.put("precio", "El precio no tiene el formato adecuado");
+		}
+	}
+
 	public void setPrecio(BigDecimal precio) {
+		if(precio == null || precio.compareTo(BigDecimal.ZERO) < 0) {
+			errores.put("precio", "El precio es obligatorio y debe ser positivo");
+		}
+		
 		this.precio = precio;
 	}
 
+	public Map<String, String> getErrores() {
+		return errores;
+	}
+
+	public boolean isCorrecto() {
+		return errores.size() == 0;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, nombre, precio);
