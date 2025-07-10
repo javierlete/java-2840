@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Tienda</title>
+<link rel="icon" href="../imgs/cart3.svg">
 </head>
 <body>
 <h1>Tienda</h1>
