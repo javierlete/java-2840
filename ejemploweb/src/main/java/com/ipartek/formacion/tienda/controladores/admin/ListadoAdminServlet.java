@@ -2,8 +2,7 @@ package com.ipartek.formacion.tienda.controladores.admin;
 
 import java.io.IOException;
 
-import com.ipartek.formacion.tienda.accesodatos.DaoProducto;
-import com.ipartek.formacion.tienda.accesodatos.DaoProductoSqlite;
+import com.ipartek.formacion.tienda.config.Configuracion;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,9 +20,7 @@ public class ListadoAdminServlet extends HttpServlet {
 		// Convertir la información al formato necesario
 		// Crear objeto basado en información individual
 		// Ejecutar lógica de negocio
-		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/JavierLete/git/java-2840/ejemploweb/bdd/tienda.db");
-		
-		var productos = dao.obtenerTodos();
+		var productos = Configuracion.DAO_PRODUCTO.obtenerTodos();
 		
 		// Preparar modelo para siguiente vista
 		request.setAttribute("productos", productos);
