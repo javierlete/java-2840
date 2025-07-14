@@ -7,7 +7,7 @@
 
 <%-- <p>${producto}</p> --%>
 
-<form action="formulario" method="post">
+<form action="admin/formulario" method="post">
 	<div>
 		<input name="id" type="hidden" value="${producto.id}"> <span></span>
 	</div>
