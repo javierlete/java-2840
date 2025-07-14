@@ -17,7 +17,7 @@ public class AdminFilter extends HttpFilter {
 	@Override
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		if(request.getSession().getAttribute("email") == null) {
+		if(request.getSession().getAttribute("usuario") == null) {
 			response.sendRedirect(request.getContextPath() + "/login");
 			return;
 		}

@@ -16,14 +16,14 @@
 
 	<nav>
 		<ul>
-			<c:if test="${email == null}">
+			<c:if test="${usuario == null}">
 				<li><a href="login">Iniciar sesión</a></li>
 			</c:if>
 
-			<c:if test="${email != null}">
+			<c:if test="${usuario != null}">
 				<li><a href="admin/listado">Listado</a></li>
 				<li><a href="admin/formulario">Formulario</a></li>
-				<li>${email}</li>
+				<li>${usuario.nombre}</li>
 				<li><a href="logout">Cerrar sesión</a></li>
 			</c:if>
 		</ul>
