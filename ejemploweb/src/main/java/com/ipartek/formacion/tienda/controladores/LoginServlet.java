@@ -2,8 +2,7 @@ package com.ipartek.formacion.tienda.controladores;
 
 import java.io.IOException;
 
-import com.ipartek.formacion.tienda.logicanegocio.AnonimoNegocio;
-import com.ipartek.formacion.tienda.logicanegocio.AnonimoNegocioHardCodeado;
+import com.ipartek.formacion.tienda.config.Configuracion;
 import com.ipartek.formacion.tienda.modelos.Usuario;
 
 import jakarta.servlet.ServletException;
@@ -43,9 +42,7 @@ public class LoginServlet extends HttpServlet {
 		Usuario usuario = new Usuario(null, null, email, password);
 		
 		// Ejecutar lógica de negocio
-		AnonimoNegocio negocio = new AnonimoNegocioHardCodeado();
-		
-		Usuario autenticado = negocio.autenticar(usuario);
+		Usuario autenticado = Configuracion.ANONIMO_NEGOCIO.autenticar(usuario);
 		
 		if(autenticado != null) {
 			// Preparar modelo para siguiente vista
