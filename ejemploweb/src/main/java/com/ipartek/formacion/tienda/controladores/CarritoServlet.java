@@ -34,6 +34,10 @@ public class CarritoServlet extends HttpServlet {
 
 			if (producto != null) {
 				carrito.add(producto);
+
+				// Saltar a la siguiente vista
+				response.sendRedirect(request.getContextPath() + "/carrito");
+				return;
 			}
 		}
 		// Preparar modelo para siguiente vista
