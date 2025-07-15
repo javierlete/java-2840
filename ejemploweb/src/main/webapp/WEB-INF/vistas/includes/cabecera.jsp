@@ -16,13 +16,15 @@
 
 	<nav>
 		<ul>
+			<li><a href="">Listado</a></li>
+			<li><a href="carrito">Carrito</a></li>
 			<c:if test="${usuario == null}">
 				<li><a href="login">Iniciar sesión</a></li>
 			</c:if>
 
 			<c:if test="${usuario != null}">
-				<li><a href="admin/listado">Listado</a></li>
-				<li><a href="admin/formulario">Formulario</a></li>
+				<li><a href="admin/listado">Admin Listado</a></li>
+				<li><a href="admin/formulario">Admin Formulario</a></li>
 				<li>${usuario.nombre}</li>
 				<li><a href="logout">Cerrar sesión</a></li>
 			</c:if>
