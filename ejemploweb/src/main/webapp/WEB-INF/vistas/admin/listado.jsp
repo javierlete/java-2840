@@ -2,12 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
-<table>
-	<thead>
+<table class="table table-hover table-striped table-bordered">
+	<thead class="table-dark">
 		<tr>
-			<th>Id</th>
+			<th class="text-end">Id</th>
 			<th>Nombre</th>
-			<th>Precio</th>
+			<th class="text-end">Precio</th>
 			<th>Opciones</th>
 		</tr>
 	</thead>
@@ -15,19 +15,19 @@
 	<tbody>
 		<c:forEach items="${productos}" var="p">
 			<tr>
-				<th>${p.id}</th>
+				<th class="text-end">${p.id}</th>
 				<td>${p.nombre}</td>
-				<td><fmt:formatNumber type="currency" value="${p.precio}"/></td>
-				<td><a href="admin/formulario?id=${p.id}">Editar</a> <a href="admin/borrar?id=${p.id}">Borrar</a>
+				<td class="text-end"><fmt:formatNumber type="currency" value="${p.precio}"/></td>
+				<td><a class="btn btn-primary btn-sm" href="admin/formulario?id=${p.id}">Editar</a> <a class="btn btn-danger btn-sm" href="admin/borrar?id=${p.id}">Borrar</a>
 				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
 
-	<tfoot>
+	<tfoot class="table-dark">
 		<tr>
 			<td colspan="3"></td>
-			<td><a href="formulario">Añadir</a></td>
+			<td><a class="btn btn-primary btn-sm" href="admin/formulario">Añadir</a></td>
 		</tr>
 	</tfoot>
 </table>
