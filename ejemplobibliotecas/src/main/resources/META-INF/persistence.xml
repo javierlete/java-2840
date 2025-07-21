@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0">
 
-	<persistence-unit name="com.ipartek.formacion.ejemplobibliotecas.entidades">
+	<persistence-unit name="daojpa">
 		<class>com.ipartek.formacion.ejemplobibliotecas.entidades.Producto</class>
 		<class>com.ipartek.formacion.ejemplobibliotecas.entidades.Usuario</class>
 
