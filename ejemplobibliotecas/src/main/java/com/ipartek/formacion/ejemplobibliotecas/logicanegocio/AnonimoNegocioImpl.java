@@ -1,18 +1,17 @@
 package com.ipartek.formacion.ejemplobibliotecas.logicanegocio;
 
-import org.jboss.logging.Logger;
-
 import com.ipartek.formacion.bibliotecas.Fabrica;
 import com.ipartek.formacion.ejemplobibliotecas.accesodatos.DaoProducto;
 import com.ipartek.formacion.ejemplobibliotecas.accesodatos.DaoUsuario;
 import com.ipartek.formacion.ejemplobibliotecas.entidades.Producto;
 import com.ipartek.formacion.ejemplobibliotecas.entidades.Usuario;
 
+import lombok.extern.java.Log;
+
+@Log
 public class AnonimoNegocioImpl implements AnonimoNegocio {
 	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.obtener("dao.producto");
 	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.obtener("dao.usuario");
-	
-	private static final Logger log = Logger.getLogger(AnonimoNegocio.class.getName());
 	
 	@Override
 	public Iterable<Producto> listadoProductos() {
@@ -33,7 +32,7 @@ public class AnonimoNegocioImpl implements AnonimoNegocio {
 		log.info("Usuario por email: " + usuarioEmail);
 		
 		if(usuarioEmail == null || !usuarioEmail.getPassword().equals(usuario.getPassword())) {
-			log.warn("USUARIO INCORRECTO");
+			log.warning("USUARIO INCORRECTO");
 			return null;
 		}
 		
