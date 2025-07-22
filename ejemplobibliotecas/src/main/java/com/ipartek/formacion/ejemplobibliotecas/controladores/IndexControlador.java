@@ -10,7 +10,7 @@ public class IndexControlador implements Controlador {
 	private static final AnonimoNegocio NEGOCIO = (AnonimoNegocio) Fabrica.obtener("negocio.anonimo");
 
 	@Override
-	public String ejecutar(String metodo, Map<String, String[]> mapaEntrada, Map<String, Object> mapaSalida) {
+	public String ejecutar(Map<String, Object> mapaSalida) {
 		var productos = NEGOCIO.listadoProductos();
 
 		mapaSalida.put("productos", productos);
