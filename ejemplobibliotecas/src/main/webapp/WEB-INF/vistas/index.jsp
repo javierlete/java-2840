@@ -11,7 +11,7 @@
 
 	<ul>
 		<c:forEach items="${productos}" var="p">
-			<li>${p.nombre}:${p.precio}</li>
+			<li><a href="detalle?id=${p.id}">${p.nombre}</a>:${p.precio}</li>
 		</c:forEach>
 	</ul>
 
