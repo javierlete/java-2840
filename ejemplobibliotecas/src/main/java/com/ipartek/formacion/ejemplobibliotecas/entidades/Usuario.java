@@ -24,11 +24,11 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	@Size(max = 20)
 	private String nombre;
-	
+
 	@NotBlank
 	@Size(max = 50)
 	@Email

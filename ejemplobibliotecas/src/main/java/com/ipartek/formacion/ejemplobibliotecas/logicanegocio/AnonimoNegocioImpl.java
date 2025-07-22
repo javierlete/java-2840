@@ -12,7 +12,7 @@ import lombok.extern.java.Log;
 public class AnonimoNegocioImpl implements AnonimoNegocio {
 	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.obtener("dao.producto");
 	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.obtener("dao.usuario");
-	
+
 	@Override
 	public Iterable<Producto> listadoProductos() {
 		return DAO_PRODUCTO.obtenerTodos();
@@ -26,19 +26,19 @@ public class AnonimoNegocioImpl implements AnonimoNegocio {
 	@Override
 	public Usuario autenticar(Usuario usuario) {
 		log.info("Autenticando usuario: " + usuario);
-		
+
 		Usuario usuarioEmail = DAO_USUARIO.buscarPorEmail(usuario.getEmail());
-		
+
 		log.info("Usuario por email: " + usuarioEmail);
-		
-		if(usuarioEmail == null || !usuarioEmail.getPassword().equals(usuario.getPassword())) {
+
+		if (usuarioEmail == null || !usuarioEmail.getPassword().equals(usuario.getPassword())) {
 			log.warning("USUARIO INCORRECTO");
 			return null;
 		}
-		
+
 		log.info("USUARIO CORRECTO");
-		
+
 		return usuarioEmail;
 	}
-	
+
 }

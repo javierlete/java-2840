@@ -9,7 +9,7 @@ public interface Dao<T> {
 		throw new DaoException("NO IMPLEMENTADO");
 	}
 
-	default	T insertar(T objeto) {
+	default T insertar(T objeto) {
 		throw new DaoException("NO IMPLEMENTADO");
 	}
 

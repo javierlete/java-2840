@@ -7,9 +7,10 @@ public class DaoUsuarioJpa extends DaoJpa<Usuario> implements DaoUsuario {
 	public DaoUsuarioJpa() {
 		super(Usuario.class);
 	}
-	
+
 	@Override
 	public Usuario buscarPorEmail(String email) {
-		return ejecutarJpa(em -> em.createQuery("from Usuario u where u.email = ?1", Usuario.class).setParameter(1, email).getSingleResultOrNull());
+		return ejecutarJpa(em -> em.createQuery("from Usuario u where u.email = ?1", Usuario.class)
+				.setParameter(1, email).getSingleResultOrNull());
 	}
 }

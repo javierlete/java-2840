@@ -14,12 +14,12 @@ public class ValidationPruebas {
 	public static void main(String[] args) {
 		ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
 		Validator validator = validatorFactory.getValidator();
-		
+
 		Usuario usuario = Usuario.builder().nombre("asdf").email("asd@f").password("1234").build();
-		
+
 		Set<ConstraintViolation<Usuario>> validaciones = validator.validate(usuario);
-		
-		for(ConstraintViolation<Usuario> validacion: validaciones) {
+
+		for (ConstraintViolation<Usuario> validacion : validaciones) {
 			System.out.println(validacion.getPropertyPath() + ": " + validacion.getMessage());
 		}
 	}

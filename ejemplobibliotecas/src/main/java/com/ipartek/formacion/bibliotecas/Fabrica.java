@@ -23,11 +23,8 @@ public class Fabrica {
 
 			Class<?> clase = Class.forName(nombreObjeto);
 
-			Constructor<?> constructor;
-			Object objeto = null;
-
-			constructor = clase.getConstructor();
-			objeto = constructor.newInstance();
+			Constructor<?> constructor = clase.getConstructor();
+			Object objeto = constructor.newInstance();
 
 			return objeto;
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException

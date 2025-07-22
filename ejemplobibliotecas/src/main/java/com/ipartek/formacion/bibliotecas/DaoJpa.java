@@ -11,11 +11,11 @@ public class DaoJpa<T> implements Dao<T> {
 	private static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("daojpa");
 
 	private Class<T> tipo;
-	
+
 	public DaoJpa(Class<T> tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	@Override
 	public Iterable<T> obtenerTodos() {
 		return ejecutarJpa(em -> em.createQuery("from " + tipo.getSimpleName(), tipo).getResultList());
