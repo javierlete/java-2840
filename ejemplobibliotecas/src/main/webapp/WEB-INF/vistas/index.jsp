@@ -1,19 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="jakarta.tags.core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Listado productos</title>
-</head>
-<body>
+<%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
-	<ul>
-		<c:forEach items="${productos}" var="p">
-			<li><a href="detalle?id=${p.id}">${p.nombre}</a>:${p.precio}</li>
-		</c:forEach>
-	</ul>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+	<c:forEach items="${productos}" var="p">
+		<div class="col">
+			<div class="card h-100">
+				<img src="https://picsum.photos/400/300?${p.id}" class="card-img-top"
+					alt="...">
+				<div class="card-body">
+					<h5 class="card-title">${p.nombre}</h5>
+					<p class="card-text">This is a wider card with supporting text
+						below as a natural lead-in to additional content. This content is
+						a little bit longer.</p>
+					<p>
+						<a href="detalle?id=${p.id}"></a>
+					</p>
+				</div>
+				<div class="card-footer">
+					<small class="text-body-secondary">${p.precio}</small>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+</div>
 
-</body>
-</html>
+<%@ include file="/WEB-INF/vistas/includes/pie.jsp"%>

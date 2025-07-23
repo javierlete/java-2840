@@ -1,21 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Formulario</title>
-</head>
-<body>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
 <h1>Formulario de producto</h1>
 
 <form method="post">
-	<input name="nombre" placeholder="Nombre">
-	<input name="precio" placeholder="Precio">
+	<jl:label-input etiqueta="Nombre del producto" id="nombre" />
+	<jl:label-input etiqueta="Precio del producto" id="precio" />
 	
-	<button>Guardar</button>
+	<button class="btn btn-primary">Guardar</button>
 </form>
 
-</body>
-</html>
+<%@ include file="/WEB-INF/vistas/includes/pie.jsp"%>
