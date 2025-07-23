@@ -10,8 +10,8 @@ import lombok.extern.java.Log;
 
 @Log
 public class AnonimoNegocioImpl implements AnonimoNegocio {
-	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.obtener("dao.producto");
-	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.obtener("dao.usuario");
+	protected static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.obtener("dao.producto");
+	protected static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.obtener("dao.usuario");
 
 	@Override
 	public Iterable<Producto> listadoProductos() {
