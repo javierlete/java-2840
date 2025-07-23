@@ -3,12 +3,16 @@ package com.ipartek.formacion.bibliotecas;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import lombok.extern.java.Log;
 
 @Log
 public class Fabrica {
+	private static final Map<String, Object> OBJETOS = new HashMap<>();
+	
 	private static final Properties props;
 
 	static {
@@ -22,6 +26,10 @@ public class Fabrica {
 
 	public static Object obtener(String identificador) {
 		try {
+			if(OBJETOS.containsKey(identificador)) {
+				return OBJETOS.get(identificador);
+			}
+			
 			String nombreObjeto = props.getProperty(identificador);
 
 			log.info(identificador);
@@ -36,6 +44,8 @@ public class Fabrica {
 			Constructor<?> constructor = clase.getConstructor();
 			Object objeto = constructor.newInstance();
 
+			OBJETOS.put(identificador, objeto);
+			
 			return objeto;
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
