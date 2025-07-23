@@ -5,6 +5,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
+import lombok.extern.java.Log;
+
+@Log
 public class Fabrica {
 	private static final Properties props;
 
@@ -21,6 +24,13 @@ public class Fabrica {
 		try {
 			String nombreObjeto = props.getProperty(identificador);
 
+			log.info(identificador);
+			log.info(nombreObjeto);
+
+			if(nombreObjeto == null) {
+				throw new RuntimeException("No se ha encontrado " + identificador + " en el fichero de configuración");
+			}
+			
 			Class<?> clase = Class.forName(nombreObjeto);
 
 			Constructor<?> constructor = clase.getConstructor();
