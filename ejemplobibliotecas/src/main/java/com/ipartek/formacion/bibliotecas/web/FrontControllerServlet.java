@@ -31,6 +31,8 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		String ruta = controlador.ejecutar(metodo, mapaEntrada, mapaSalida);
 
+		mapaSalida.put("pathInfo", pathInfo);
+		
 //		Preparar modelo para siguiente vista
 		for(Entry<String, Object> par: mapaSalida.entrySet()) {
 			request.setAttribute(par.getKey(), par.getValue());
