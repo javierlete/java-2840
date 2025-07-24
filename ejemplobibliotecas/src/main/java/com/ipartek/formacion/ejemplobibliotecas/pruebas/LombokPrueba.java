@@ -9,8 +9,8 @@ public class LombokPrueba {
 
 	public static void main(String[] args) {
 		var producto1 = new Producto();
-		var producto2 = new Producto(1L, "Javier", new BigDecimal("1234"));
-		var producto3 = new Producto(1L, "Javier", new BigDecimal("1234"));
+		var producto2 = new Producto(1L, "Javier", new BigDecimal("1234"), null);
+		var producto3 = new Producto(1L, "Javier", new BigDecimal("1234"), null);
 
 		System.out.println(producto1);
 

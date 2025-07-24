@@ -7,4 +7,10 @@ public class DaoProductoJpa extends DaoJpa<Producto> implements DaoProducto {
 	public DaoProductoJpa() {
 		super(Producto.class);
 	}
+
+	@Override
+	public Iterable<Producto> buscarPorCategoria(Long id) {
+		return ejecutarJpa(em -> em.createQuery("from Producto p where p.categoria.id=?1", Producto.class)
+				.setParameter(1, id).getResultList());
+	}
 }
