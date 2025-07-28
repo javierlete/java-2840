@@ -40,4 +40,4 @@
 
 	<jl:migas pathInfo="${pathInfo}"/>
 
-	<main class="container my-5">
+	<%="<main class='container my-5'>" %>
