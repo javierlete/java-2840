@@ -1,0 +1,23 @@
+package com.ipartek.formacion.ejemplospring.controladores;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.ipartek.formacion.ejemplospring.servicios.AnonimoService;
+
+@Controller
+public class IndexController {
+	@Autowired
+	private AnonimoService anonimoService;
+	
+	@GetMapping("/")
+	public String index(Model modelo) {
+		var productos = anonimoService.listadoProductos();
+		
+		modelo.addAttribute("productos", productos);
+		
+		return "index";
+	}
+}
