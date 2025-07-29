@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>Formulario Productos</h1>
+
+	<form action="listado.html" th:action="@{/admin/formulario}"
+		method="post" th:object="${producto}">
+		<div>
+			<input th:field="*{nombre}" placeholder="Nombre">
+			<span th:errors="*{nombre}">Error de nombre</span>
+		</div>
+		<div>
+			<input th:field="*{precio}" placeholder="Precio">
+			<span th:errors="*{precio}">Error de precio</span>
+		</div>
+		<div>
+			<button>Guardar</button>
+		</div>
+
+	</form>
+</body>
+</html>
