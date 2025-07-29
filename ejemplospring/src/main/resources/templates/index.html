@@ -9,7 +9,7 @@
 	<h1>Productos</h1>
 
 	<ul>
-		<li th:each="p: ${productos}"><a href="#"
+		<li th:each="p: ${productos}"><a href="detalle.html"
 			th:href="@{/detalle(id=${p.id})}" th:text="${p.nombre}">Producto</a>:
 			<span th:text="${p.precio}">precio</span></li>
 	</ul>

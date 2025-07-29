@@ -20,4 +20,13 @@ public class IndexController {
 		
 		return "index";
 	}
+	
+	@GetMapping("/detalle")
+	public String detalle(Long id, Model modelo) {
+		var producto = anonimoService.detalleProducto(id);
+		
+		modelo.addAttribute("producto", producto);
+		
+		return "detalle";
+	}
 }
