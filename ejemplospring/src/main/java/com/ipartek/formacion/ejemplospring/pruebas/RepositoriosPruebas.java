@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.ipartek.formacion.ejemplospring.entidades.Categoria;
@@ -14,6 +15,7 @@ import com.ipartek.formacion.ejemplospring.repositorios.ProductoRepository;
 import com.ipartek.formacion.ejemplospring.repositorios.UsuarioRepository;
 
 @Component
+@Order(1)
 public class RepositoriosPruebas implements CommandLineRunner {
 
 	@Autowired
