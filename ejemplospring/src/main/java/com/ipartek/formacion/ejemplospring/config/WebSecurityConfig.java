@@ -8,17 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 	// AUTENTICACIÓN
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
 	@Autowired
 	private DataSource dataSource;
 
@@ -27,13 +22,16 @@ public class WebSecurityConfig {
 	  throws Exception {
 	    auth.jdbcAuthentication()
 	      .dataSource(dataSource)
-	      .withDefaultSchema()
-	      .withUser(User.withUsername("javier@email.net")
-	        .password(passwordEncoder.encode("javier"))
-	        .roles("ADMINISTRADOR"))
-	      .withUser(User.withUsername("pepe@email.net")
-    		.password(passwordEncoder.encode("pepe"))
-    		.roles("USUARIO"))
+	      .usersByUsernameQuery("""
+	      		SELECT email, password, 1
+	      		FROM usuarios
+	      		WHERE email=?
+	      		""")
+	      .authoritiesByUsernameQuery("""
+	      		SELECT email, CONCAT('ROLE_', rol)
+	      		FROM usuarios
+	      		WHERE email=?
+	      		""")
 	      ;
 	}
 

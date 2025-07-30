@@ -52,7 +52,7 @@ public class RepositoriosPruebas implements CommandLineRunner {
 			System.out.println(producto);
 		}
 		
-		var javier = Usuario.builder().nombre("Javier").email("javier@email.net").password("javier").build();
+		var javier = Usuario.builder().rol("ADMINISTRADOR").nombre("Javier").email("javier@email.net").password("javier").build();
 		var pepe = Usuario.builder().nombre("Pepe").email("pepe@email.net").password("pepe").build();
 		
 		usuarioRepository.save(javier);
