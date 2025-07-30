@@ -12,6 +12,16 @@ public class IndexController {
 	@Autowired
 	private AnonimoService anonimoService;
 	
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		return "logout";
+	}
+	
 	@GetMapping("/")
 	public String index(Model modelo) {
 		var productos = anonimoService.listadoProductos();
