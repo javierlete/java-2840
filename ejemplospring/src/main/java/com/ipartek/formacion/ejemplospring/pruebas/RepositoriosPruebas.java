@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.ipartek.formacion.ejemplospring.entidades.Categoria;
@@ -27,6 +28,9 @@ public class RepositoriosPruebas implements CommandLineRunner {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		var infor = Categoria.builder().nombre("Informática").build();
@@ -52,8 +56,8 @@ public class RepositoriosPruebas implements CommandLineRunner {
 			System.out.println(producto);
 		}
 		
-		var javier = Usuario.builder().rol("ADMINISTRADOR").nombre("Javier").email("javier@email.net").password("javier").build();
-		var pepe = Usuario.builder().nombre("Pepe").email("pepe@email.net").password("pepe").build();
+		var javier = Usuario.builder().rol("ADMINISTRADOR").nombre("Javier").email("javier@email.net").password(passwordEncoder.encode("javier")).build();
+		var pepe = Usuario.builder().nombre("Pepe").email("pepe@email.net").password(passwordEncoder.encode("pepe")).build();
 		
 		usuarioRepository.save(javier);
 		usuarioRepository.save(pepe);
