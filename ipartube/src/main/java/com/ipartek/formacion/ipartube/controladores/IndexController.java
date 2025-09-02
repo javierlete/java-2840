@@ -21,7 +21,7 @@ public class IndexController {
 		return "index";
 	}
 	
-	@GetMapping("/video")
+	@GetMapping("video")
 	public String video(Long id, Model modelo) {
 		var video = anonimoService.verDetalleVideo(id);
 		modelo.addAttribute("video", video);
