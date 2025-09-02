@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>IparTube</title>
+</head>
+<body>
+
+	<h1>IparTube</h1>
+
+	<form action="index.html" th:action="@{/nuevo}" method="post">
+		<input name="titulo" placeholder="Título">
+		<input name="url" placeholder="URL">
+		<textarea name="descripcion" placeholder="Descripción"></textarea>
+		
+		<button>Guardar</button>
+	</form>
+
+</body>
+</html>

@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ipartek.formacion.ipartube.entidades.Video;
 import com.ipartek.formacion.ipartube.servicios.AnonimoService;
 
 @Controller
@@ -13,18 +15,30 @@ import com.ipartek.formacion.ipartube.servicios.AnonimoService;
 public class IndexController {
 	@Autowired
 	private AnonimoService anonimoService;
-	
+
 	@GetMapping
 	public String index(Model modelo) {
 		var videos = anonimoService.verListadoVideos();
 		modelo.addAttribute("videos", videos);
 		return "index";
 	}
-	
+
 	@GetMapping("video")
 	public String video(Long id, Model modelo) {
 		var video = anonimoService.verDetalleVideo(id);
 		modelo.addAttribute("video", video);
 		return "video";
+	}
+
+	@GetMapping("nuevo")
+	public String nuevo() {
+		return "nuevo";
+	}
+
+	@PostMapping("nuevo")
+	public String nuevoPost(Video video) {
+		anonimoService.nuevoVideo(video);
+		
+		return "redirect:/";
 	}
 }
