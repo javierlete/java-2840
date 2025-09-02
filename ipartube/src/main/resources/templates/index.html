@@ -8,8 +8,8 @@
 
 <h1>IparTube</h1>
 
-<ul th:each="video: ${videos}" th:object="${video}">
-	<li>
+<ul>
+	<li th:each="video: ${videos}" th:object="${video}">
 		<a th:href="@{/video(id=*{id})}" href="video.html" th:text="*{titulo}">TÍTULO DEL VIDEO</a>
 	</li>
 </ul>
