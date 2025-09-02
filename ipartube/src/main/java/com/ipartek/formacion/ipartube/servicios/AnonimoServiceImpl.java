@@ -21,5 +21,10 @@ public class AnonimoServiceImpl implements AnonimoService {
 	public Video verDetalleVideo(Long id) {
 		return videoRepository.findById(id).orElse(null);
 	}
+
+	@Override
+	public Video nuevoVideo(Video video) {
+		return videoRepository.save(video);
+	}
 	
 }
