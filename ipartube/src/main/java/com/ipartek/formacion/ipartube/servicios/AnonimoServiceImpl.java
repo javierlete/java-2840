@@ -1,6 +1,8 @@
 package com.ipartek.formacion.ipartube.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.ipartube.entidades.Video;
@@ -25,6 +27,11 @@ public class AnonimoServiceImpl implements AnonimoService {
 	@Override
 	public Video nuevoVideo(Video video) {
 		return videoRepository.save(video);
+	}
+
+	@Override
+	public Page<Video> verListadoVideos(Pageable pagina) {
+		return videoRepository.findAll(pagina);
 	}
 	
 }

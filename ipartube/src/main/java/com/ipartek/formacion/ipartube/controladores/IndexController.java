@@ -1,11 +1,15 @@
 package com.ipartek.formacion.ipartube.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ipartek.formacion.ipartube.entidades.Video;
 import com.ipartek.formacion.ipartube.servicios.AnonimoService;
@@ -17,8 +21,10 @@ public class IndexController {
 	private AnonimoService anonimoService;
 
 	@GetMapping
-	public String index(Model modelo) {
-		var videos = anonimoService.verListadoVideos();
+	public String index(Model modelo, @RequestParam(defaultValue = "0") int pagina,
+			@RequestParam(defaultValue = "10") int tamano, @RequestParam(defaultValue="ASC") String ordenacion) {
+		var videos = anonimoService
+				.verListadoVideos(PageRequest.of(pagina, tamano, Sort.by(Direction.fromString(ordenacion), "titulo")));
 		modelo.addAttribute("videos", videos);
 		return "index";
 	}
@@ -38,7 +44,7 @@ public class IndexController {
 	@PostMapping("nuevo")
 	public String nuevoPost(Video video) {
 		anonimoService.nuevoVideo(video);
-		
+
 		return "redirect:/";
 	}
 }
