@@ -6,32 +6,59 @@
 </head>
 <body>
 
-<h1>IparTube</h1>
+	<h1>IparTube</h1>
 
-<form th:action="@{/}">
-<input name="tamano" value="2" th:value="${param.tamano != null ? param.tamano : '2'}" placeholder="Tamaño de página">
-Descendente: <input type="checkbox" name="ordenacion" value="DESC" 
-th:checked="${param.ordenacion != null}">
-<button>Cambiar tamaño de página</button>
-</form>
+	<nav>
+		<ul>
+			<li><a href="login.html" th:href="@{/login}">Login</a></li>
 
-<ul>
-	<li th:each="video: ${videos}" th:object="${video}">
-		<a th:href="@{/video(id=*{id})}" href="video.html" th:text="*{titulo}">TÍTULO DEL VIDEO</a>
-	</li>
-</ul>
+			<li>
+				<form action="index.html" th:action="@{/logout}" method="post">
+					<button>Logout</button>
+				</form>
+			</li>
+			<li><a href="nuevo.html" th:href="@{/nuevo}">Nuevo</a></li>
+		</ul>
+	</nav>
 
-<div>
-	<a th:if="${!videos.first}" href="#" th:href="@{/(pagina=0,tamano=${param.tamano},ordenacion=${param.ordenacion})}">Primera</a>
-	<a th:if="${videos.hasPrevious()}" href="#" th:href="@{/(pagina=${videos.number - 1},tamano=${param.tamano},ordenacion=${param.ordenacion})}">Anterior</a>
-	<a th:if="${videos.hasNext()}" href="#" th:href="@{/(pagina=${videos.number + 1},tamano=${param.tamano},ordenacion=${param.ordenacion})}">Siguiente</a>
-	<a th:if="${!videos.last}" href="#" th:href="@{/(pagina=${videos.totalPages - 1},tamano=${param.tamano},ordenacion=${param.ordenacion})}">Última</a>
-	
-	<p>Número de página <span th:text="${videos.number}"></span></p>
-	<p>Tamaño de página <span th:text="${videos.size}"></span></p>
-	<p>Número de páginas <span th:text="${videos.totalPages}"></span></p>
-	<p>Número de registros <span th:text="${videos.totalElements}"></span></p>
-</div>
+	<form th:action="@{/}">
+		<input name="tamano" value="2"
+			th:value="${param.tamano != null ? param.tamano : '2'}"
+			placeholder="Tamaño de página"> Descendente: <input
+			type="checkbox" name="ordenacion" value="DESC"
+			th:checked="${param.ordenacion != null}">
+		<button>Cambiar tamaño de página</button>
+	</form>
+
+	<ul>
+		<li th:each="video: ${videos}" th:object="${video}"><a
+			th:href="@{/video(id=*{id})}" href="video.html" th:text="*{titulo}">TÍTULO
+				DEL VIDEO</a></li>
+	</ul>
+
+	<div>
+		<a th:if="${!videos.first}" href="#"
+			th:href="@{/(pagina=0,tamano=${param.tamano},ordenacion=${param.ordenacion})}">Primera</a>
+		<a th:if="${videos.hasPrevious()}" href="#"
+			th:href="@{/(pagina=${videos.number - 1},tamano=${param.tamano},ordenacion=${param.ordenacion})}">Anterior</a>
+		<a th:if="${videos.hasNext()}" href="#"
+			th:href="@{/(pagina=${videos.number + 1},tamano=${param.tamano},ordenacion=${param.ordenacion})}">Siguiente</a>
+		<a th:if="${!videos.last}" href="#"
+			th:href="@{/(pagina=${videos.totalPages - 1},tamano=${param.tamano},ordenacion=${param.ordenacion})}">Última</a>
+
+		<p>
+			Número de página <span th:text="${videos.number}"></span>
+		</p>
+		<p>
+			Tamaño de página <span th:text="${videos.size}"></span>
+		</p>
+		<p>
+			Número de páginas <span th:text="${videos.totalPages}"></span>
+		</p>
+		<p>
+			Número de registros <span th:text="${videos.totalElements}"></span>
+		</p>
+	</div>
 
 </body>
 </html>
