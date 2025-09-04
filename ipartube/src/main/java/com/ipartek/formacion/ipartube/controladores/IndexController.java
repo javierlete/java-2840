@@ -22,7 +22,7 @@ public class IndexController {
 
 	@GetMapping
 	public String index(Model modelo, @RequestParam(defaultValue = "0") int pagina,
-			@RequestParam(defaultValue = "10") int tamano, @RequestParam(defaultValue="ASC") String ordenacion) {
+			@RequestParam(defaultValue = "10") int tamano, @RequestParam(defaultValue = "ASC") String ordenacion) {
 		var videos = anonimoService
 				.verListadoVideos(PageRequest.of(pagina, tamano, Sort.by(Direction.fromString(ordenacion), "titulo")));
 		modelo.addAttribute("videos", videos);
