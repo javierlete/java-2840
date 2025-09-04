@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <title>IparTube</title>
@@ -10,14 +10,20 @@
 
 	<nav>
 		<ul>
-			<li><a href="login.html" th:href="@{/login}">Login</a></li>
+			<li sec:authorize="!isAuthenticated()">
+				<a href="login.html" th:href="@{/login}">Login</a>
+			</li>
 
-			<li>
+			<li sec:authorize="isAuthenticated()">
 				<form action="index.html" th:action="@{/logout}" method="post">
 					<button>Logout</button>
 				</form>
 			</li>
-			<li><a href="nuevo.html" th:href="@{/nuevo}">Nuevo</a></li>
+			<li sec:authorize="hasRole('ROLE_USUARIO')">
+				<a href="nuevo.html" th:href="@{/nuevo}">Nuevo</a>
+			</li>
+			<li sec:authorize="isAuthenticated()" sec:authentication="name">
+			</li>
 		</ul>
 	</nav>
 
