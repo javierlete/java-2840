@@ -4,6 +4,8 @@ let ul, iframe;
 let primera, anterior, siguiente, ultima;
 let numero, tamanoPagina, paginas, registros;
 
+const URL = '/api/videos';
+
 window.addEventListener('DOMContentLoaded', async () => {
 	ul = document.querySelector('ul');
 	iframe = document.querySelector('iframe');
@@ -18,26 +20,26 @@ window.addEventListener('DOMContentLoaded', async () => {
 	paginas = document.getElementById('paginas');
 	registros = document.getElementById('registros');
 
+	document.forms[0].addEventListener('submit', guardar);
+	
 	principal();
 });
 
 async function detalle(id) {
-	ul.style.display = 'none';
-	iframe.style.display = null;
+	mostrar('detalle');
 
-	const respuesta = await fetch('/api/videos/' + id);
+	const respuesta = await fetch(`${URL}/${id}`);
 	const video = await respuesta.json();
 
 	iframe.src = video.url;
 }
 
 async function principal(pagina = 0, tamano = 2, ordenacion = 'ASC') {
-	iframe.style.display = 'none';
-	ul.style.display = null;
+	mostrar('listado');
 
 	ul.innerHTML = '';
 
-	const respuesta = await fetch(`/api/videos/paginados?tamano=${tamano}&pagina=${pagina}&ordenacion=${ordenacion}`); // '/api/videos');
+	const respuesta = await fetch(`${URL}/paginados?tamano=${tamano}&pagina=${pagina}&ordenacion=${ordenacion}`); // '/api/videos');
 	const contexto = await respuesta.json();
 
 	primera.onclick = e => {
@@ -82,9 +84,89 @@ async function principal(pagina = 0, tamano = 2, ordenacion = 'ASC') {
 		li.innerHTML = `
 			<li>
 				<a href="javascript:detalle(${video.id})">${video.titulo}</a>
+				<a href="javascript:editar(${video.id})">[Editar]</a>
+				<a href="javascript:borrar(${video.id})">[Borrar]</a>
 			</li>
 		`;
 
 		ul.appendChild(li);
 	});
+}
+
+function nuevo() {
+	mostrar('formulario');
+
+	document.forms[0].reset();
+}
+
+async function editar(id) {
+	const respuesta = await fetch(`${URL}/${id}`);
+	const video = await respuesta.json();
+
+	document.forms[0]['id'].value = video.id;
+	document.forms[0].titulo.value = video.titulo;
+	document.forms[0].url.value = video.url;
+	document.forms[0].descripcion.value = video.descripcion;
+
+	mostrar('formulario');
+}
+
+async function borrar(id) {
+	if (!confirm('¿Estás seguro?')) {
+		return;
+	}
+
+	console.log(await fetch(`${URL}/${id}`, { method: 'DELETE' }));
+	
+	principal();
+}
+
+
+function mostrar(id) {
+	const sections = document.querySelectorAll('section');
+	sections.forEach(section => section.style.display = 'none');
+
+	document.getElementById(id).style.display = null;
+}
+
+async function guardar(e) {
+	e.preventDefault();
+	
+	const video = { 
+		titulo: document.forms[0].titulo.value,
+		url: document.forms[0].url.value,
+		descripcion: document.forms[0].descripcion.value,
+	}
+
+	console.log(video);
+	
+	if(document.forms[0]['id'].value) {
+		video.id = +document.forms[0]['id'].value;
+		
+		const respuesta = await fetch(`${URL}/${video.id}`, {
+			method: 'PUT',
+			body: JSON.stringify(video),
+			headers: {
+				'Content-type': 'application/json'
+			}
+		});
+		
+		const videoResultado = await respuesta.json();
+		
+		console.log(videoResultado);
+	} else {
+		const respuesta = await fetch(URL, {
+			method: 'POST',
+			body: JSON.stringify(video),
+			headers: {
+				'Content-type': 'application/json'
+			}
+		});
+		
+		const videoResultado = await respuesta.json();
+		
+		console.log(videoResultado);
+	}
+
+	principal();	
 }

@@ -10,38 +10,54 @@
 	<h1>FRONTEND</h1>
 
 	<div>
-		<a href="javascript:principal()">Principal</a>
+		<a href="javascript:principal()">Principal</a> <a
+			href="javascript:nuevo()">Nuevo</a>
 	</div>
 
-	<div>
-		<a id="primera" href="#">Primera</a>
-		<a id="anterior" href="#">Anterior</a>
-		<a id="siguiente" href="#">Siguiente</a>
-		<a id="ultima" href="#">Última</a>
+	<section id="listado">
 
-		<p>
-			Número de página <span id="numero"></span>
-		</p>
-		<p>
-			Tamaño de página <span id="tamano"></span>
-		</p>
-		<p>
-			Número de páginas <span id="paginas"></span>
-		</p>
-		<p>
-			Número de registros <span id="registros"></span>
-		</p>
-	</div>
+		<div>
+			<a id="primera" href="#">Primera</a> <a id="anterior" href="#">Anterior</a>
+			<a id="siguiente" href="#">Siguiente</a> <a id="ultima" href="#">Última</a>
 
-	<ul>
-	</ul>
+			<p>
+				Número de página <span id="numero"></span>
+			</p>
+			<p>
+				Tamaño de página <span id="tamano"></span>
+			</p>
+			<p>
+				Número de páginas <span id="paginas"></span>
+			</p>
+			<p>
+				Número de registros <span id="registros"></span>
+			</p>
+		</div>
 
-	<div>
+		<ul>
+		</ul>
+	</section>
+
+	<section id="detalle">
+	
 		<iframe width="560" height="315"
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-	</div>
+	</section>
+
+	<section id="formulario">
+	
+		<form>
+			<input type="hidden" name="id">
+			<input name="titulo" placeholder="Título">
+			<input name="url" placeholder="URL">
+			<textarea name="descripcion" placeholder="Descripción"></textarea>
+			
+			<button>Guardar</button>
+		</form>
+		
+	</section>
 
 </body>
 </html>
