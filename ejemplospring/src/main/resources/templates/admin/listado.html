@@ -23,7 +23,7 @@
 				<td th:text="${p.nombre}">Producto</td>
 				<td th:text="${p.precio}">Precio</td>
 				<td>
-					<a href="formulario.html" th:href="@{/admin/formulario(id=${p.id})}"}>Editar</a>
+					<a href="formulario.html" th:href="@{/admin/formulario(id=${p.id})}">Editar</a>
 					<a href="#" th:href="@{/admin/borrar(id=${p.id})}">Borrar</a>
 				</td>
 			</tr>
