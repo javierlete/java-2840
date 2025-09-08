@@ -39,7 +39,7 @@
 	<ul>
 		<li th:each="video: ${videos}" th:object="${video}"><a
 			th:href="@{/video(id=*{id})}" href="video.html" th:text="*{titulo}">TÍTULO
-				DEL VIDEO</a></li>
+				DEL VIDEO</a> <a href="nuevo.html" th:href="@{/editar(id=*{id})}">[Editar]</a> <a onclick="javascript:return confirm('¿Estás seguro de querer borrar el video?')" href="#" th:href="@{/borrar(id=*{id})}">[Borrar]</a></li>
 	</ul>
 
 	<div>

@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ipartek.formacion.ipartube.entidades.Video;
+import com.ipartek.formacion.ipartube.servicios.AdminService;
 import com.ipartek.formacion.ipartube.servicios.AnonimoService;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
+
 	@Autowired
 	private AnonimoService anonimoService;
+	
+	@Autowired
+	private AdminService adminService;
 
 	@GetMapping
 	public String index(Model modelo, @RequestParam(defaultValue = "0") int pagina,
@@ -37,14 +42,32 @@ public class IndexController {
 	}
 
 	@GetMapping("nuevo")
-	public String nuevo() {
+	public String nuevo(Video video) {
 		return "nuevo";
 	}
 
 	@PostMapping("nuevo")
 	public String nuevoPost(Video video) {
-		anonimoService.nuevoVideo(video);
+		if(video.getId() == null) {
+			adminService.crearVideo(video);
+		}else {
+			adminService.modificarVideo(video);
+		}
 
+		return "redirect:/";
+	}
+
+	@GetMapping("editar")
+	public String editar(Long id, Model modelo) {
+		var video = anonimoService.verDetalleVideo(id);
+		modelo.addAttribute("video", video);
+		return "nuevo";
+	}
+	
+	@GetMapping("borrar")
+	public String borrar(Long id) {
+		adminService.borrarVideo(id);
+		
 		return "redirect:/";
 	}
 	

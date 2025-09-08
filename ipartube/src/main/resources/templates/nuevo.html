@@ -8,10 +8,11 @@
 
 	<h1>IparTube</h1>
 
-	<form action="index.html" th:action="@{/nuevo}" method="post">
-		<input name="titulo" placeholder="Título">
-		<input name="url" placeholder="URL">
-		<textarea name="descripcion" placeholder="Descripción"></textarea>
+	<form action="index.html" th:action="@{/nuevo}" method="post" th:object="${video}">
+		<input th:field="*{id}" type="hidden">
+		<input th:field="*{titulo}" placeholder="Título">
+		<input th:field="*{url}" placeholder="URL">
+		<textarea th:field="*{descripcion}" placeholder="Descripción"></textarea>
 		
 		<button>Guardar</button>
 	</form>
