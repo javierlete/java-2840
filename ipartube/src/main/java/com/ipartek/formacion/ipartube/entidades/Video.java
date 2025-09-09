@@ -8,6 +8,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +39,7 @@ public class Video {
 	@Size(max = 255)
 	private String url;
 
+	@NotNull
 	@ManyToOne
 	private Usuario usuario;
 }
