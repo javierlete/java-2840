@@ -18,7 +18,7 @@ public class AnonimoServiceImpl implements AnonimoService {
 
 	@Override
 	public Iterable<Video> verListadoVideos() {
-		return videoRepository.findAll();
+		return videoRepository.buscarVideosCompacto();
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class AnonimoServiceImpl implements AnonimoService {
 
 	@Override
 	public Page<Video> verListadoVideos(Pageable pagina) {
-		return videoRepository.findAll(pagina);
+		return videoRepository.buscarVideosPaginadosCompacto(pagina);
 	}
 	
 }
