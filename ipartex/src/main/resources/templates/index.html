@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<ul>
+		<li th:each="mensaje: ${mensajes}" th:object="${mensaje}">
+			<span style="font-weight: bold" th:text="*{usuario.nombre}">Usuario</span>: <span th:text="*{texto}">Mensaje</span>
+		</li>
+	</ul>
+
+	<form th:action="@{/}" method="post">
+		<input name="email" placeholder="Email del usuario">
+		<textarea name="texto" placeholder="Texto del mensaje"></textarea>
+		
+		<button>Enviar</button>
+	</form>
+
+</body>
+</html>
