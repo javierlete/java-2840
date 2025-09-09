@@ -1,23 +1,49 @@
-<!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
+<!doctype html>
+<html lang="es" xmlns:th="https://thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap demo</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+	crossorigin="anonymous">
 </head>
 <body>
+	<h1 class="text-bg-dark p-2 text-center mb-4">IparteX</h1>
 
-	<ul>
-		<li th:each="mensaje: ${mensajes}" th:object="${mensaje}">
-			<span style="font-weight: bold" th:text="*{usuario.nombre}">Usuario</span>: <span th:text="*{texto}">Mensaje</span>
-		</li>
-	</ul>
+	<main class="container">
 
-	<form th:action="@{/}" method="post">
-		<input name="email" placeholder="Email del usuario">
-		<textarea name="texto" placeholder="Texto del mensaje"></textarea>
-		
-		<button>Enviar</button>
-	</form>
+		<ul class="list-group">
+			<li class="list-group-item" th:each="mensaje: ${mensajes}"
+				th:object="${mensaje}"><span style="font-weight: bold"
+				th:text="*{usuario.nombre}">Usuario</span>: <span th:text="*{texto}">Mensaje</span>
+			</li>
+		</ul>
 
+		<form class="my-5" th:action="@{/}" method="post">
+			<div>
+				<label class="form-label" for="email">Email</label> <input class="form-control"
+					name="email" placeholder="Email del usuario">
+			</div>
+			<div>
+				<label class="form-label" for="texto">Texto</label>
+				<textarea class="form-control" name="texto"
+					placeholder="Texto del mensaje"></textarea>
+			</div>
+
+			<button class="btn btn-primary mt-2">Enviar</button>
+		</form>
+	</main>
+	
+	<footer class="text-bg-dark p-2 text-center">
+		&copy;2025 Javier Lete
+	</footer>
+	
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+		crossorigin="anonymous"></script>
 </body>
 </html>
