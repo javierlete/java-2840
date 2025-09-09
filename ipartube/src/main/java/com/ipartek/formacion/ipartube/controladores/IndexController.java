@@ -1,5 +1,7 @@
 package com.ipartek.formacion.ipartube.controladores;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,7 +49,11 @@ public class IndexController {
 	}
 
 	@PostMapping("nuevo")
-	public String nuevoPost(Video video) {
+	public String nuevoPost(Video video, Principal principal) {
+		var usuario = adminService.buscarUsuarioPorEmail(principal.getName());
+		
+		video.setUsuario(usuario);
+		
 		if(video.getId() == null) {
 			adminService.crearVideo(video);
 		}else {
