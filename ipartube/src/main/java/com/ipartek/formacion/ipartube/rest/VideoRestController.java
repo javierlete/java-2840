@@ -71,6 +71,7 @@ public class VideoRestController {
 	}
 	
 	@DeleteMapping("{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteVideo(@PathVariable Long id) {
 		if(adminService.verDetalleVideo(id) == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
