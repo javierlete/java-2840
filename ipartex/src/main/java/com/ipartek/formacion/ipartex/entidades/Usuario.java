@@ -1,5 +1,8 @@
 package com.ipartek.formacion.ipartex.entidades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +37,7 @@ public class Usuario {
 	@Size(max = 255)
 	private String email;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@NotBlank
 	@Size(max = 100)
 	private String password;
