@@ -41,6 +41,8 @@ async function principal(pagina = 0, tamano = 2, ordenacion = 'ASC') {
 
 	const respuesta = await fetch(`${URL}/paginados?tamano=${tamano}&pagina=${pagina}&ordenacion=${ordenacion}`); // '/api/videos');
 	const contexto = await respuesta.json();
+	
+	const page = contexto.page;
 
 	primera.onclick = e => {
 		e.preventDefault();
@@ -63,18 +65,18 @@ async function principal(pagina = 0, tamano = 2, ordenacion = 'ASC') {
 	ultima.onclick = e => {
 		e.preventDefault();
 
-		principal(contexto.totalPages - 1, tamano, ordenacion);
+		principal(page.totalPages - 1, tamano, ordenacion);
 	};
 
-	primera.style.display = contexto.first ? 'none' : null;
+	primera.style.display = pagina == 0 ? 'none' : null;
 	anterior.style.display = pagina == 0 ? 'none' : null;
-	siguiente.style.display = pagina == contexto.totalPages - 1 ? 'none' : null;
-	ultima.style.display = contexto.last ? 'none' : null;
+	siguiente.style.display = pagina == page.totalPages - 1 ? 'none' : null;
+	ultima.style.display = pagina == page.totalPages - 1 ? 'none' : null;
 
-	numero.innerText = contexto.number;
-	tamanoPagina.innerText = contexto.size;
-	paginas.innerText = contexto.totalPages;
-	registros.innerText = contexto.totalElements;
+	numero.innerText = page.number;
+	tamanoPagina.innerText = page.size;
+	paginas.innerText = page.totalPages;
+	registros.innerText = page.totalElements;
 
 	const videos = contexto.content;
 
